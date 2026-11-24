@@ -1,0 +1,1029 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@nakamura196/react-ui — デザインシステム・パーツ一覧</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f6f8;
+        --surface: #ffffff;
+        --surface-sub: #f8fafc;
+        --border: #dce3ea;
+        --border-strong: #c5d0dc;
+        --fg: #1a1d21;
+        --fg-muted: #526071;
+        --header-bg: #003d73;
+        --band-bg: #002b52;
+        --primary: #005096;
+        --primary-hover: #003d73;
+        --accent-yellow: #ffcd00;
+        --utokyo-bright: #0b8bee;
+        --ok: #047857;
+        --warn: #b45309;
+        --danger: #b91c1c;
+        --purple: #6d28d9;
+        --focus-ring: #ffcd00;
+        --radius: 6px;
+        --font-sans: "BIZ UDPGothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
+
+      html.dark {
+        --bg: #020617;
+        --surface: #0f172a;
+        --surface-sub: #162033;
+        --border: #1e293b;
+        --border-strong: #334155;
+        --fg: #f1f5f9;
+        --fg-muted: #94a3b8;
+        --header-bg: #00284d;
+        --band-bg: #001d38;
+        --primary: #38bdf8;
+        --primary-hover: #7dd3fc;
+        --ok: #34d399;
+        --warn: #fbbf24;
+        --danger: #f87171;
+        --purple: #c4b5fd;
+        --focus-ring: #ffcd00;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        font-family: var(--font-sans);
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-size: 14px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* デジタル庁・GOV.UK 準拠の明確なキーボードフォーカス表示 */
+      :focus-visible {
+        outline: 3px solid var(--focus-ring);
+        outline-offset: 2px;
+      }
+
+      a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* Global Header */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: var(--header-bg);
+        color: #ffffff;
+        border-bottom: 1px solid var(--band-bg);
+      }
+      .site-header__inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        height: 64px;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .site-header__brand {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: -0.01em;
+      }
+      .site-header__nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 14px;
+      }
+      .site-header__nav a {
+        color: rgba(255, 255, 255, 0.88);
+      }
+      .site-header__nav a:hover {
+        color: #ffffff;
+      }
+      .site-header__btn {
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 4px;
+        padding: 4px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .site-header__btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      /* Title Band */
+      .title-band {
+        background: var(--band-bg);
+        color: #ffffff;
+        padding: 36px 24px;
+        text-align: center;
+      }
+      .title-band h1 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+      }
+      .title-band p {
+        margin: 8px auto 0;
+        max-width: 720px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      /* Layout: Left TOC + Main Content (1280px) */
+      .layout {
+        max-width: 1280px;
+        margin: 28px auto 64px;
+        padding: 0 24px;
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+      @media (max-width: 900px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .toc {
+          position: static !important;
+        }
+      }
+
+      .toc {
+        position: sticky;
+        top: 84px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px;
+      }
+      .toc__group {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--fg-muted);
+        margin: 14px 0 6px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border);
+      }
+      .toc__group:first-child {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+      }
+      .toc a {
+        display: block;
+        padding: 4px 6px;
+        font-size: 13px;
+        color: var(--fg);
+        border-radius: 4px;
+      }
+      .toc a:hover {
+        background: var(--surface-sub);
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      /* Section Blocks */
+      .doc-section {
+        margin-bottom: 40px;
+        scroll-margin-top: 84px;
+      }
+      .doc-section__head {
+        border-bottom: 2px solid var(--border-strong);
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .doc-section__head h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+      }
+      .doc-section__tag {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--fg-muted);
+        font-family: var(--font-mono);
+      }
+      .doc-lead {
+        margin: 0 0 16px;
+        color: var(--fg-muted);
+        font-size: 13px;
+      }
+
+      /* GOV.UK style When to use / When not to use */
+      .guidance-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin: 0 0 16px;
+      }
+      @media (max-width: 700px) {
+        .guidance-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .guidance-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--ok);
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        font-size: 12.5px;
+      }
+      .guidance-box--dont {
+        border-left-color: var(--danger);
+      }
+      .guidance-box h3 {
+        margin: 0 0 6px;
+        font-size: 12.5px;
+        font-weight: 700;
+      }
+      .guidance-box ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+      .guidance-box li {
+        margin: 3px 0;
+      }
+
+      /* Live Preview Frame */
+      .preview-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 12px;
+      }
+      .preview-box__bar {
+        background: var(--surface-sub);
+        border-bottom: 1px solid var(--border);
+        padding: 6px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 11px;
+        color: var(--fg-muted);
+      }
+      .preview-box__body {
+        padding: 20px;
+      }
+      .preview-box__body--canvas {
+        background: var(--bg);
+      }
+
+      /* Code Disclosure */
+      .code-block {
+        margin: 0;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        overflow: hidden;
+      }
+      .code-block summary {
+        cursor: pointer;
+        padding: 8px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--primary);
+        background: var(--surface-sub);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .code-block pre {
+        margin: 0;
+        padding: 14px;
+        overflow-x: auto;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        line-height: 1.5;
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+      .copy-btn {
+        border: 1px solid var(--border-strong);
+        background: var(--surface);
+        color: var(--fg);
+        border-radius: 4px;
+        padding: 2px 8px;
+        font-size: 11px;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .copy-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      /* Foundation: Swatches */
+      .swatch-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 12px;
+      }
+      .swatch {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .swatch__color {
+        height: 54px;
+        border-bottom: 1px solid var(--border);
+      }
+      .swatch__meta {
+        padding: 10px 12px;
+        font-size: 12px;
+      }
+      .swatch__name {
+        font-weight: 700;
+      }
+      .swatch__code {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--fg-muted);
+      }
+      .swatch__use {
+        margin-top: 4px;
+        font-size: 11px;
+        color: var(--fg-muted);
+      }
+
+      /* Sample UI Primitives inside previews */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        border: 1px solid transparent;
+        font-family: inherit;
+      }
+      .btn--primary {
+        background: var(--primary);
+        color: #ffffff;
+      }
+      html.dark .btn--primary {
+        color: #020617;
+      }
+      .btn--primary:hover {
+        background: var(--primary-hover);
+      }
+      .btn--secondary {
+        background: var(--surface);
+        color: var(--fg);
+        border-color: var(--border-strong);
+      }
+      .btn--secondary:hover {
+        background: var(--surface-sub);
+      }
+      .btn--danger {
+        background: var(--surface);
+        color: var(--danger);
+        border-color: #fca5a5;
+      }
+
+      /* Search & Facet Pattern */
+      .search-row {
+        max-width: 640px;
+        margin: 0 auto 14px;
+        display: flex;
+        gap: 8px;
+      }
+      .search-input {
+        flex: 1;
+        border: 1px solid var(--border-strong);
+        border-radius: 5px;
+        padding: 9px 12px;
+        font-size: 14px;
+        background: var(--surface);
+        color: var(--fg);
+        font-family: inherit;
+      }
+      .facet-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 10px 14px;
+        margin-bottom: 12px;
+      }
+      .facet-select {
+        border: 1px solid var(--border-strong);
+        border-radius: 5px;
+        padding: 6px 10px;
+        font-size: 12px;
+        background: var(--surface);
+        color: var(--fg);
+        font-family: inherit;
+      }
+      .count-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 10px 16px;
+        margin-bottom: 12px;
+        font-size: 12px;
+      }
+      .bib-list {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+      .bib-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 14px 18px;
+        border-top: 1px solid var(--border);
+      }
+      .bib-row:first-child {
+        border-top: 0;
+      }
+      .bib-row:hover {
+        background: var(--surface-sub);
+      }
+      .bib-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--primary);
+      }
+      .bib-meta {
+        font-size: 12px;
+        color: var(--fg-muted);
+        margin-left: 10px;
+      }
+      .bib-desc {
+        margin: 4px 0 0;
+        font-size: 12px;
+        color: var(--fg-muted);
+      }
+      .bib-right {
+        text-align: right;
+        flex-shrink: 0;
+        font-size: 11px;
+      }
+      .bib-cat {
+        color: var(--ok);
+        font-weight: 700;
+        margin-right: 8px;
+      }
+      .bib-cond {
+        color: var(--purple);
+        font-weight: 700;
+      }
+      .bib-id {
+        margin-top: 4px;
+        font-family: var(--font-mono);
+        color: var(--fg-muted);
+      }
+
+      /* Key-Value Metadata Table (GOV.UK Summary List) */
+      .kv-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--surface);
+        border: 1px solid var(--border);
+      }
+      .kv-table th,
+      .kv-table td {
+        padding: 10px 14px;
+        border-top: 1px solid var(--border);
+        text-align: left;
+        font-size: 13px;
+        vertical-align: top;
+      }
+      .kv-table tr:first-child th,
+      .kv-table tr:first-child td {
+        border-top: 0;
+      }
+      .kv-table th {
+        width: 220px;
+        background: var(--surface-sub);
+        color: var(--fg-muted);
+        font-weight: 700;
+      }
+
+      /* News List */
+      .news-row {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        padding: 11px 16px;
+        border-top: 1px solid var(--border);
+        font-size: 13px;
+      }
+      .news-row:first-child {
+        border-top: 0;
+      }
+      .news-date {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--fg-muted);
+        flex-shrink: 0;
+      }
+      .news-cat {
+        font-size: 12px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      /* Notice Banner (Digital Agency / GOV.UK Notification Banner) */
+      .notice {
+        border: 1px solid var(--border-strong);
+        border-left: 4px solid var(--primary);
+        background: var(--surface);
+        border-radius: 4px;
+        padding: 12px 14px;
+        font-size: 13px;
+      }
+      .notice--warn {
+        border-left-color: var(--warn);
+      }
+      .notice__title {
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--fg-muted);
+        font-size: 12px;
+        padding: 18px 24px;
+      }
+      .site-footer__inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="#top" class="site-header__brand">@nakamura196/react-ui</a>
+        <nav class="site-header__nav" aria-label="グローバルナビゲーション">
+          <a href="#foundation">基礎 (Foundation)</a>
+          <a href="#components">パーツ (Components)</a>
+          <a href="#patterns">画面パターン (Patterns)</a>
+          <a href="design-guidelines.md">指針 (Markdown)</a>
+          <button type="button" class="site-header__btn" id="theme-toggle">ライト / ダーク切替</button>
+        </nav>
+      </div>
+    </header>
+
+    <div class="title-band" id="top">
+      <h1>UTokyo ベース デザインシステム・パーツ一覧</h1>
+      <p>
+        東京大学 Visual Identity Guidelines の配色をベースに、デジタル庁デザインシステム・GOV.UK Design
+        System のアクセシビリティ原則と、東洋文庫 漢籍データベースの端正な一覧設計を統合した共通 UI カタログ
+      </p>
+    </div>
+
+    <div class="layout">
+      <!-- Left TOC -->
+      <aside class="toc" aria-label="目次">
+        <div class="toc__group">基礎 (Foundation)</div>
+        <a href="#foundation">カラー・トークン</a>
+        <a href="#typography">書体・余白・幅</a>
+        <a href="#accessibility">アクセシビリティ基準</a>
+
+        <div class="toc__group">パーツ (Components)</div>
+        <a href="#comp-header">ヘッダー・タイトル帯</a>
+        <a href="#comp-buttons">ボタン・状態表示</a>
+        <a href="#comp-notice">通知バナー</a>
+        <a href="#comp-kv">メタデータ一覧表</a>
+
+        <div class="toc__group">画面パターン (Patterns)</div>
+        <a href="#pat-search">検索・データカタログ</a>
+        <a href="#pat-news">お知らせ一覧</a>
+      </aside>
+
+      <!-- Main Documentation -->
+      <main>
+        <!-- 1. FOUNDATION: COLORS -->
+        <section class="doc-section" id="foundation">
+          <div class="doc-section__head">
+            <h2>カラー・トークン</h2>
+            <span class="doc-section__tag">Foundation / Color</span>
+          </div>
+          <p class="doc-lead">
+            画面の 9 割は白と淡い背景（<code>#f4f6f8</code>）で構成し、濃い UTokyo ブルーはヘッダー・タイトル帯・主ボタン・リンクに限定して使います。本文文字と背景は WCAG 2.1 AA（コントラスト比 4.5:1 以上）を満たします。
+          </p>
+          <div class="swatch-grid">
+            <div class="swatch">
+              <div class="swatch__color" style="background:#003d73"></div>
+              <div class="swatch__meta">
+                <div class="swatch__name">Header Blue</div>
+                <div class="swatch__code">#003d73</div>
+                <div class="swatch__use">グローバルヘッダー背景（白文字）</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background:#002b52"></div>
+              <div class="swatch__meta">
+                <div class="swatch__name">Title Band Blue</div>
+                <div class="swatch__code">#002b52</div>
+                <div class="swatch__use">検索・トップ上部のタイトル帯</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background:#005096"></div>
+              <div class="swatch__meta">
+                <div class="swatch__name">Primary Action / Link</div>
+                <div class="swatch__code">#005096</div>
+                <div class="swatch__use">主ボタン・一覧タイトルリンク</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background:#ffcd00"></div>
+              <div class="swatch__meta">
+                <div class="swatch__name">UTokyo Yellow (Focus)</div>
+                <div class="swatch__code">#ffcd00</div>
+                <div class="swatch__use">キーボードフォーカス枠・最小限の差し色</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background:#f4f6f8"></div>
+              <div class="swatch__meta">
+                <div class="swatch__name">Page Background</div>
+                <div class="swatch__code">#f4f6f8</div>
+                <div class="swatch__use">ページ全体の落ち着いた背景色</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background:#ffffff"></div>
+              <div class="swatch__meta">
+                <div class="swatch__name">Surface &amp; Border</div>
+                <div class="swatch__code">#ffffff / #dce3ea</div>
+                <div class="swatch__use">一覧枠・入力欄の面と 1px 罫線</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. FOUNDATION: TYPOGRAPHY & WIDTH -->
+        <section class="doc-section" id="typography">
+          <div class="doc-section__head">
+            <h2>書体・余白・最大幅</h2>
+            <span class="doc-section__tag">Foundation / Layout</span>
+          </div>
+          <div class="guidance-grid">
+            <div class="guidance-box">
+              <h3>推奨（Do）</h3>
+              <ul>
+                <li>最大幅は <strong>1280px（<code>max-w-7xl</code>）</strong> を基本にする</li>
+                <li>書体は <code>BIZ UDPGothic</code>（または Noto Sans JP）</li>
+                <li>角丸は <code>4px〜6px</code>（<code>rounded-md</code>〜<code>rounded-lg</code>）に抑える</li>
+              </ul>
+            </div>
+            <div class="guidance-box guidance-box--dont">
+              <h3>避ける（Don't）</h3>
+              <ul>
+                <li>グラデーション背景・ドット柄・光るぼかし円（<code>blur-3xl</code>）</li>
+                <li>過度な角丸（<code>rounded-2xl</code>）や大きなドロップシャドウ</li>
+                <li>大文字英語の飾り見出し（例: <code>01 / FEATURE</code>）</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. FOUNDATION: ACCESSIBILITY -->
+        <section class="doc-section" id="accessibility">
+          <div class="doc-section__head">
+            <h2>アクセシビリティ基準（デジタル庁・GOV.UK 準拠）</h2>
+            <span class="doc-section__tag">Foundation / A11y</span>
+          </div>
+          <table class="kv-table">
+            <tr>
+              <th>フォーカス表示</th>
+              <td><code>Tab</code> キー移動時に <code>3px solid #ffcd00</code>（UTokyo Yellow）の明確なフォーカスリングを表示し、背景色と紛れないようにする。</td>
+            </tr>
+            <tr>
+              <th>色だけに頼らない</th>
+              <td>状態（公開中／停止中／要認証）は色だけでなく、必ず日本語テキストで明記する。</td>
+            </tr>
+            <tr>
+              <th>ランドマークと操作性</th>
+              <td><code>&lt;header&gt;</code>・<code>&lt;nav&gt;</code>・<code>&lt;main&gt;</code>・<code>&lt;footer&gt;</code> を使い分け、クリック可能要素は必ず <code>&lt;a&gt;</code> または <code>&lt;button&gt;</code> にする。</td>
+            </tr>
+          </table>
+        </section>
+
+        <!-- 4. COMPONENT: HEADER -->
+        <section class="doc-section" id="comp-header">
+          <div class="doc-section__head">
+            <h2>ヘッダー・タイトル帯</h2>
+            <span class="doc-section__tag">Component / Navigation</span>
+          </div>
+          <div class="guidance-grid">
+            <div class="guidance-box">
+              <h3>いつ使うか（When to use）</h3>
+              <ul>
+                <li>全ページ共通の上部ナビゲーション（4〜5 項目以内）</li>
+                <li>検索画面やトップページの導入となる単色タイトル帯</li>
+              </ul>
+            </div>
+            <div class="guidance-box guidance-box--dont">
+              <h3>いつ使わないか（When not to use）</h3>
+              <ul>
+                <li>ページごとにヘッダー項目を増減させない</li>
+                <li>ヘッダー内に派手な丸ボタンやバッジを並べない</li>
+              </ul>
+            </div>
+          </div>
+          <div class="preview-box">
+            <div class="preview-box__bar"><span>プレビュー</span><span>高さ 64px / 単色 #003d73 + #002b52</span></div>
+            <div>
+              <div style="background:#003d73;color:#fff;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;">
+                <strong style="font-size:16px;">LDAS DataSpace</strong>
+                <div style="display:flex;gap:16px;font-size:13px;opacity:.92;">
+                  <span>ホーム</span>
+                  <span style="text-decoration:underline;font-weight:700;">データカタログ</span>
+                  <span>お知らせ</span>
+                  <span>マイページ</span>
+                </div>
+              </div>
+              <div style="background:#002b52;color:#fff;padding:22px 16px;text-align:center;">
+                <div style="font-size:20px;font-weight:700;">LDAS DataSpace データカタログ</div>
+                <div style="font-size:12px;opacity:.8;margin-top:4px;">文化資源・メディア横断データスペース</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. COMPONENT: BUTTONS -->
+        <section class="doc-section" id="comp-buttons">
+          <div class="doc-section__head">
+            <h2>ボタン・状態表示</h2>
+            <span class="doc-section__tag">Component / Action</span>
+          </div>
+          <p class="doc-lead">
+            1 画面の中で主ボタン（青塗り）は最も重要な 1 操作に絞り、その他の操作は副ボタン（白地＋枠線）にします。丸ピル型バッジの乱発を避け、状態はテキストまたは控えめな矩形で示します。
+          </p>
+          <div class="preview-box">
+            <div class="preview-box__bar"><span>プレビュー</span><span>Primary / Secondary / Destructive</span></div>
+            <div class="preview-box__body" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+              <button type="button" class="btn btn--primary">検索する（主操作）</button>
+              <button type="button" class="btn btn--secondary">条件を確認（副操作）</button>
+              <button type="button" class="btn btn--danger">削除（破壊的操作）</button>
+              <span style="margin-left:12px;font-size:12px;font-weight:700;color:var(--ok);">承認済・公開中</span>
+              <span style="font-size:12px;font-weight:700;color:var(--warn);">承認待ち</span>
+              <span style="font-size:12px;font-weight:700;color:var(--purple);">要ログイン</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. COMPONENT: NOTICE BANNER -->
+        <section class="doc-section" id="comp-notice">
+          <div class="doc-section__head">
+            <h2>通知バナー</h2>
+            <span class="doc-section__tag">Component / Feedback</span>
+          </div>
+          <div class="preview-box">
+            <div class="preview-box__bar"><span>プレビュー</span><span>左 4px アクセントライン（GOV.UK / デジタル庁方式）</span></div>
+            <div class="preview-box__body" style="display:grid;gap:12px;">
+              <div class="notice">
+                <div class="notice__title">お知らせ・状態案内</div>
+                <div>LDAS ID でログインすると、東京大学包括契約の対象データセットを無料で閲覧できます。</div>
+              </div>
+              <div class="notice notice--warn">
+                <div class="notice__title">利用条件を満たしていません</div>
+                <div>このデータセットを閲覧するには、学術ドメイン（*.ac.jp）の所属証明またはプラン契約が必要です。</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. COMPONENT: SUMMARY LIST / KV TABLE -->
+        <section class="doc-section" id="comp-kv">
+          <div class="doc-section__head">
+            <h2>メタデータ一覧表（Summary List）</h2>
+            <span class="doc-section__tag">Component / Data Display</span>
+          </div>
+          <p class="doc-lead">
+            書誌詳細やアカウント情報・設定確認など、項目名と値が対になる情報ではカードを並べず、罫線区切りの定義表を使います。
+          </p>
+          <div class="preview-box">
+            <div class="preview-box__bar"><span>プレビュー</span><span>書誌・データセット詳細メタデータ</span></div>
+            <div class="preview-box__body">
+              <table class="kv-table">
+                <tr>
+                  <th>タイトル</th>
+                  <td>地域文化資源デジタルアーカイブ『谷中・根津・千駄木』1〜10号</td>
+                </tr>
+                <tr>
+                  <th>提供機関</th>
+                  <td>地域文化資源デジタルアーカイブ・プロジェクト（yanesen.ldas.jp）</td>
+                </tr>
+                <tr>
+                  <th>利用条件（ODRL）</th>
+                  <td>教育・研究利用（学校プラン または 東大・*.ac.jp 所属証明）</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. PATTERN: BIBLIOGRAPHIC SEARCH -->
+        <section class="doc-section" id="pat-search">
+          <div class="doc-section__head">
+            <h2>検索・データカタログ（4 段構成パターン）</h2>
+            <span class="doc-section__tag">Pattern / Search</span>
+          </div>
+          <p class="doc-lead">
+            東洋文庫 漢籍データベース（<code>kanseki.toyobunko-lab.jp/search</code>）を基準とした検索画面パターン。左サイドバーを置かず、①中央検索バー → ②横一列絞り込み → ③件数・並び順 → ④1 つの白枠＋罫線区切りの書誌リストを 1280px 幅で配置します。
+          </p>
+          <div class="preview-box">
+            <div class="preview-box__bar"><span>ライブプレビュー</span><span>1280px 1 カラム書誌リスト型</span></div>
+            <div class="preview-box__body preview-box__body--canvas">
+              <div class="search-row">
+                <input class="search-input" type="search" placeholder="検索...（例：新聞、写真、谷根千、コーパス）" />
+                <button type="button" class="btn btn--primary">検索</button>
+              </div>
+
+              <div class="facet-bar">
+                <select class="facet-select" aria-label="カテゴリ">
+                  <option>カテゴリ（すべて・8）</option>
+                  <option>新聞（2）</option>
+                  <option>文化資源（2）</option>
+                </select>
+                <select class="facet-select" aria-label="利用条件">
+                  <option>すべての利用条件（8）</option>
+                  <option>現在の権限ですぐ利用可（3）</option>
+                </select>
+                <select class="facet-select" aria-label="提供機関">
+                  <option>提供機関（すべて・4）</option>
+                </select>
+                <a href="#pat-search" style="margin-left:auto;font-size:12px;font-weight:700;">条件をリセット</a>
+              </div>
+
+              <div class="count-bar">
+                <div>表示中 <strong>1 - 2</strong> 件中 <strong>8</strong> 件</div>
+                <div>
+                  <span style="color:var(--fg-muted);margin-right:6px;">並び順:</span>
+                  <select class="facet-select" aria-label="並び順">
+                    <option>標準順</option>
+                    <option>タイトル順</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="bib-list">
+                <div class="bib-row">
+                  <div>
+                    <div>
+                      <a href="#pat-search" class="bib-title">全国紙A 報道写真・紙面アーカイブ（独立提供者: news-a.ldas.jp）</a>
+                      <span class="bib-meta">全国紙A デジタルアーカイブ部</span>
+                      <span class="bib-meta">ダミー紙面・写真 3点</span>
+                    </div>
+                    <p class="bib-desc">ポータルとは別の独立デジタルコレクションから直接配信される紙面・報道写真コレクション。</p>
+                  </div>
+                  <div class="bib-right">
+                    <div><span class="bib-cat">新聞</span><span class="bib-cond">学校プラン / 東大・ac.jp 認証</span></div>
+                    <div class="bib-id">news-a-photo-paper-archive</div>
+                  </div>
+                </div>
+                <div class="bib-row">
+                  <div>
+                    <div>
+                      <a href="#pat-search" class="bib-title">地域文化資源デジタルアーカイブ『谷中・根津・千駄木』1〜10号</a>
+                      <span class="bib-meta">地域文化資源デジタルアーカイブ・プロジェクト</span>
+                      <span class="bib-meta">記事 446件（IIIF 対応）</span>
+                    </div>
+                    <p class="bib-desc">1984年に谷根千工房が創刊した地域雑誌『谷中・根津・千駄木』1〜10号の記事446件を公開。</p>
+                  </div>
+                  <div class="bib-right">
+                    <div><span class="bib-cat">文化資源</span><span class="bib-cond">学校プラン / 東大・ac.jp 認証</span></div>
+                    <div class="bib-id">yanesen-collectionbuilder-archive</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <details class="code-block">
+            <summary>
+              <span>HTML / 構造スニペットを見る</span>
+              <button type="button" class="copy-btn" data-copy="code-search">コピー</button>
+            </summary>
+            <pre id="code-search">&lt;!-- 1. 中央検索バー (max-w-2xl) --&gt;
+&lt;form class="mx-auto flex max-w-2xl gap-2"&gt;
+  &lt;input type="search" class="flex-1 rounded-md border border-[#cfd8e3] bg-white px-4 py-2.5 text-sm" /&gt;
+  &lt;button type="submit" class="rounded-md bg-[#005096] px-5 py-2.5 text-sm font-bold text-white"&gt;検索&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;!-- 2. 横一列ドロップダウン絞り込みバー (max-w-7xl) --&gt;
+&lt;div class="flex flex-wrap items-center gap-2.5 rounded-lg border border-[#dce3ea] bg-white px-4 py-3"&gt;...&lt;/div&gt;
+
+&lt;!-- 3. 件数・並び順バー --&gt;
+&lt;div class="flex items-center justify-between rounded-lg border border-[#dce3ea] bg-white px-5 py-3 text-xs"&gt;...&lt;/div&gt;
+
+&lt;!-- 4. 罫線区切りの書誌リスト --&gt;
+&lt;div class="divide-y divide-[#e8edf2] rounded-lg border border-[#dce3ea] bg-white"&gt;
+  &lt;article class="flex justify-between gap-4 px-5 py-4 hover:bg-[#f8fafc]"&gt;...&lt;/article&gt;
+&lt;/div&gt;</pre>
+          </details>
+        </section>
+
+        <!-- 9. PATTERN: NEWS LIST -->
+        <section class="doc-section" id="pat-news">
+          <div class="doc-section__head">
+            <h2>お知らせ一覧</h2>
+            <span class="doc-section__tag">Pattern / News</span>
+          </div>
+          <div class="preview-box">
+            <div class="preview-box__bar"><span>プレビュー</span><span>日付（等幅）＋ 種別テキスト ＋ タイトルリンク</span></div>
+            <div class="preview-box__body preview-box__body--canvas">
+              <div class="bib-list">
+                <div class="news-row">
+                  <span class="news-date">2026-11-23</span>
+                  <span class="news-cat" style="color:var(--ok);">[新規連携]</span>
+                  <a href="#pat-news">地域文化資源デジタルアーカイブ『谷中・根津・千駄木』1〜10号の分散連携を開始しました</a>
+                </div>
+                <div class="news-row">
+                  <span class="news-date">2026-11-22</span>
+                  <span class="news-cat" style="color:var(--fg-muted);">[技術・仕様]</span>
+                  <a href="#pat-news">国際標準（DSP 2025-1 / ODRL 2.2 / OID4VP 1.0）への準拠を強化しました</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div>@nakamura196/react-ui — UTokyo Visual Identity Guidelines 参考（ロゴ・シンボルマーク不使用）</div>
+        <div>参考: デジタル庁デザインシステム / GOV.UK Design System / 東洋文庫 漢籍データベース</div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('theme-toggle')?.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark')
+      })
+      document.querySelectorAll('.copy-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          const targetId = btn.getAttribute('data-copy')
+          const el = targetId ? document.getElementById(targetId) : null
+          if (!el) return
+          navigator.clipboard?.writeText(el.textContent || '')
+          const prev = btn.textContent
+          btn.textContent = 'コピー済'
+          setTimeout(() => {
+            btn.textContent = prev
+          }, 1500)
+        })
+      })
+    </script>
+  </body>
+</html>

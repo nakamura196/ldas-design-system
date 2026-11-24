@@ -8,11 +8,13 @@
 **ロゴ／シンボルマークは使用しない**（色とフォントのみを参考）。ロゴ素材は広報課への
 事前申請が必要なため、本パッケージには含めない。
 
-## 画面デザイン指針（AI っぽい装飾を避ける）
+## 画面デザイン指針・パーツ一覧（AI っぽい装飾を避ける）
 
-新しいアプリや検索画面を作るときは、色だけでなくレイアウト・余白・情報密度も統一するため **[docs/design-guidelines.md](docs/design-guidelines.md)** に従うこと。
+新しいアプリや検索画面を作るときは、色だけでなくレイアウト・余白・情報密度も統一するため以下を参照すること。
 
-- **参考レイアウト**: [東洋文庫 漢籍データベース](https://kanseki.toyobunko-lab.jp/search?size=n_20_n)（UTokyo ブルー版実装例: `https://dataspace.ldas.jp/catalog/`）
+- **パーツ一覧（1 ページ見本 HTML）**: [docs/index.html](docs/index.html)（Foundation / Components / Patterns・When to use / When not to use・ライト/ダーク切替・コピー用コード付き）
+- **文章による指針**: [docs/design-guidelines.md](docs/design-guidelines.md)
+- **参考**: [デジタル庁デザインシステム](https://design.digital.go.jp/) / [GOV.UK Design System](https://design-system.service.gov.uk/) / [東洋文庫 漢籍データベース](https://kanseki.toyobunko-lab.jp/search?size=n_20_n)（UTokyo ブルー版実装例: `https://dataspace.ldas.jp/catalog/`）
 - **基本原則**:
   - 濃い UTokyo ブルー単色ヘッダー（`#003d73`）＋単色タイトル帯（`#002b52`）＋最大幅 `1280px`（`max-w-7xl`）
   - 検索・一覧は左サイドバーや分厚い 2 列カード乱立を避け、「中央検索バー → 横一列ドロップダウン絞り込み → 件数・並び順バー → 1 つの白枠＋罫線（`divide-y`）の書誌リスト」で構成する
