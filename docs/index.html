@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@nakamura196/react-ui — デザインシステム・パーツ一覧</title>
+    <title>LDAS Design System — デザインシステム・パーツ一覧</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,7 +12,7 @@
     />
     <style>
       :root {
-        /* @nakamura196/react-ui 公式 UTokyo トークン (tokens.css 準拠) */
+        /* LDAS Design System 共通トークン (tokens.css 準拠) */
         --ds-blue-50: #e7f3fd;
         --ds-blue-600: #0b8bee;
         --ds-blue-700: #096fbe;
@@ -126,6 +126,43 @@
         align-items: center;
         gap: 20px;
         font-size: 14px;
+      }
+      .site-header__menu-btn {
+        display: none;
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 4px;
+        padding: 5px 10px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      @media (max-width: 768px) {
+        .site-header__inner {
+          flex-wrap: wrap;
+          height: auto;
+          padding: 12px 16px;
+        }
+        .site-header__menu-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .site-header__nav {
+          display: none;
+          width: 100%;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+          padding-top: 12px;
+          margin-top: 10px;
+          border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .site-header__nav.is-open {
+          display: flex;
+        }
       }
       .site-header__nav a {
         color: rgba(255, 255, 255, 0.88);
@@ -616,8 +653,11 @@
   <body>
     <header class="site-header">
       <div class="site-header__inner">
-        <a href="#top" class="site-header__brand">@nakamura196/react-ui</a>
-        <nav class="site-header__nav" aria-label="グローバルナビゲーション">
+        <a href="#top" class="site-header__brand">LDAS Design System</a>
+        <button type="button" class="site-header__menu-btn" id="mobile-menu-btn" aria-expanded="false" aria-controls="site-nav">
+          ☰ メニュー
+        </button>
+        <nav class="site-header__nav" id="site-nav" aria-label="グローバルナビゲーション">
           <a href="#foundation">基礎 (Foundation)</a>
           <a href="#components">パーツ (Components)</a>
           <a href="#patterns">画面パターン (Patterns)</a>
@@ -628,10 +668,9 @@
     </header>
 
     <div class="title-band" id="top">
-      <h1>UTokyo ベース デザインシステム・パーツ一覧</h1>
+      <h1>LDAS Design System — パーツ一覧</h1>
       <p>
-        東京大学 Visual Identity Guidelines の配色をベースに、デジタル庁デザインシステム・GOV.UK Design
-        System のアクセシビリティ原則と、東洋文庫 漢籍データベースの端正な一覧設計を統合した共通 UI カタログ
+        LDAS 関連サイト・デジタルアーカイブ群で共通利用する配色トークン・アクセシビリティ基準・画面パターンの UI カタログ
       </p>
     </div>
 
@@ -666,13 +705,13 @@
             <span class="doc-section__tag">Foundation / Color</span>
           </div>
           <p class="doc-lead">
-            <strong>東京大学 Visual Identity Guidelines (2024-06)</strong> に準拠した <code>tokens.css</code> の公式トーンスケール（UTokyo Blue <code>#0b8bee</code>〜<code>#021c30</code> ＋ UTokyo Yellow <code>#ffcd00</code>）をすべてのアプリで共通利用します。白背景上のテキストリンクにはコントラスト比 4.5:1 以上を満たす <code>--ds-blue-700 (#096fbe)</code> を使います。
+            <code>tokens.css</code> の共通ブルートーンスケール（<code>#0b8bee</code>〜<code>#021c30</code> ＋ アクセントイエロー <code>#ffcd00</code>）をすべてのアプリで共通利用します。白背景上のテキストリンクにはコントラスト比 4.5:1 以上を満たす <code>--ds-blue-700 (#096fbe)</code> を使います。
           </p>
           <div class="swatch-grid">
             <div class="swatch">
               <div class="swatch__color" style="background:#0b8bee"></div>
               <div class="swatch__meta">
-                <div class="swatch__name">UTokyo Blue (--ds-blue-600)</div>
+                <div class="swatch__name">Primary Blue (--ds-blue-600)</div>
                 <div class="swatch__code">#0b8bee</div>
                 <div class="swatch__use">主ボタン・ブランドアクセント（kasane 等）</div>
               </div>
@@ -704,7 +743,7 @@
             <div class="swatch">
               <div class="swatch__color" style="background:#ffcd00"></div>
               <div class="swatch__meta">
-                <div class="swatch__name">UTokyo Yellow (--ds-yellow)</div>
+                <div class="swatch__name">Accent Yellow (--ds-yellow)</div>
                 <div class="swatch__code">#ffcd00</div>
                 <div class="swatch__use">キーボードフォーカス枠・最小限の差し色</div>
               </div>
@@ -785,7 +824,7 @@
           <table class="kv-table">
             <tr>
               <th>フォーカス表示</th>
-              <td><code>Tab</code> キー移動時に <code>3px solid #ffcd00</code>（UTokyo Yellow）の明確なフォーカスリングを表示し、背景色と紛れないようにする。</td>
+              <td><code>Tab</code> キー移動時に <code>3px solid #ffcd00</code>（Accent Yellow）の明確なフォーカスリングを表示し、背景色と紛れないようにする。</td>
             </tr>
             <tr>
               <th>色だけに頼らない</th>
@@ -914,7 +953,7 @@
             <div class="preview-box__body" style="display:grid;gap:12px;">
               <div class="notice">
                 <div class="notice__title">お知らせ・状態案内</div>
-                <div>LDAS ID でログインすると、東京大学包括契約の対象データセットを無料で閲覧できます。</div>
+                <div>LDAS ID でログインすると、所属機関の包括契約対象データセットを無料で閲覧できます。</div>
               </div>
               <div class="notice notice--warn">
                 <div class="notice__title">利用条件を満たしていません</div>
@@ -1123,7 +1162,7 @@
 
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <div>@nakamura196/react-ui — UTokyo Visual Identity Guidelines 参考（ロゴ・シンボルマーク不使用）</div>
+        <div>LDAS Design System (nakamura196/ldas-design-system)</div>
         <div>参考: デジタル庁デザインシステム / GOV.UK Design System / 東洋文庫 漢籍データベース</div>
       </div>
     </footer>
@@ -1131,6 +1170,12 @@
     <script>
       document.getElementById('theme-toggle')?.addEventListener('click', () => {
         document.documentElement.classList.toggle('dark')
+      })
+      const menuBtn = document.getElementById('mobile-menu-btn')
+      const siteNav = document.getElementById('site-nav')
+      menuBtn?.addEventListener('click', () => {
+        const open = siteNav?.classList.toggle('is-open')
+        menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false')
       })
       document.querySelectorAll('.copy-btn').forEach((btn) => {
         btn.addEventListener('click', (e) => {

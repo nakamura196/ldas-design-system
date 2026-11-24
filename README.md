@@ -1,12 +1,11 @@
-# @nakamura196/react-ui
+# LDAS Design System (`nakamura196/ldas-design-system`)
 
-中村の個人 React / Next.js アプリ群（dts-viewer / iiif-3d-viewer / next-fb-anno など）で
-**デザインを統一し、コンポーネントを再利用する**ための共有 UI パッケージ。
+LDAS 関連の Web アプリ・ポータル群（`kasane.ldas.jp` / `dataspace.ldas.jp` / `pay.ldas.jp` / `id.ldas.jp` / `dts-viewer` 等）で
+**デザインを統一し、コンポーネントと画面パターンを再利用する**ための共通デザインシステム。
 
-配色・書体は **東京大学 Visual Identity Guidelines (2024-06)** に倣う
-（方向性は "Structured" = 青+黄を差し色に、白黒を基調とした知的な配色）。
-**ロゴ／シンボルマークは使用しない**（色とフォントのみを参考）。ロゴ素材は広報課への
-事前申請が必要なため、本パッケージには含めない。
+- **パーツ一覧（GitHub Pages）**: https://nakamura196.github.io/ldas-design-system/
+
+配色は青トーンスケール＋黄を差し色に、白と落ち着いたグレーを基調とした知的な配色を採用している。
 
 ## 画面デザイン指針・パーツ一覧（AI っぽい装飾を避ける）
 
@@ -14,9 +13,9 @@
 
 - **パーツ一覧（1 ページ見本 HTML）**: [docs/index.html](docs/index.html)（Foundation / Components / Patterns・When to use / When not to use・ライト/ダーク切替・コピー用コード付き）
 - **文章による指針**: [docs/design-guidelines.md](docs/design-guidelines.md)
-- **参考**: [デジタル庁デザインシステム](https://design.digital.go.jp/) / [GOV.UK Design System](https://design-system.service.gov.uk/) / [東洋文庫 漢籍データベース](https://kanseki.toyobunko-lab.jp/search?size=n_20_n)（UTokyo ブルー版実装例: `https://dataspace.ldas.jp/catalog/`）
+- **参考**: [デジタル庁デザインシステム](https://design.digital.go.jp/) / [GOV.UK Design System](https://design-system.service.gov.uk/) / [東洋文庫 漢籍データベース](https://kanseki.toyobunko-lab.jp/search?size=n_20_n)（実装例: `https://dataspace.ldas.jp/catalog/`）
 - **基本原則**:
-  - 色は `tokens.css` の公式 UTokyo トーンスケール（`#0b8bee` / `#096fbe` / `#07538f` / `#04385f` ＋ `#ffcd00`）に統一し、最大幅 `1280px`（`max-w-7xl`）を基本とする
+  - 色は `tokens.css` の共通ブルートーンスケール（`#0b8bee` / `#096fbe` / `#07538f` / `#04385f` ＋ `#ffcd00`）に統一し、最大幅 `1280px`（`max-w-7xl`）を基本とする
   - 検索・一覧は左サイドバーや分厚い 2 列カード乱立を避け、「中央検索バー → 横一列ドロップダウン絞り込み → 件数・並び順バー → 1 つの白枠＋罫線（`divide-y`）の書誌リスト」で構成する
   - グラデーション背景・blur 光球・ガラスモーフィズム・過度な角丸・飾り英語キャプション等「AI が既定で作りがちな SaaS 意匠」は使わない
 
@@ -24,7 +23,7 @@
 
 | 種別 | 内容 |
 |---|---|
-| デザイントークン | `styles.css`（UTokyo Blue `#0B8BEE` / Yellow `#FFCD00`、青トーンスケール、light/dark のCSS変数、Noto Serif/Sans JP） |
+| デザイントークン | `styles.css`（Primary Blue `#0B8BEE` / Accent Yellow `#FFCD00`、青トーンスケール、light/dark のCSS変数、Noto Serif/Sans JP） |
 | `Footer` | 4列フッター（①タイトル+説明 ②③④ 任意のリンク列）+ 著作権表記 |
 | `Header` | スティッキーヘッダー（ブランド名 + ナビ + 右スロット） |
 | `ThemeToggle` | next-themes によるライト/ダーク切替 |
@@ -178,5 +177,4 @@ DataTables テーマが全て使える。React 版コンポーネントと同じ
 
 ## ライセンス
 
-MIT（本パッケージのコード）。配色・書体の指針は東京大学 Visual Identity Guidelines に基づく。
-UTokyo のロゴ・シンボルマーク等の素材は含まない（使用には広報課への事前申請が必要）。
+MIT（本パッケージのコード）。
