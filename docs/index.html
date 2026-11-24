@@ -12,46 +12,56 @@
     />
     <style>
       :root {
-        --bg: #f4f6f8;
+        /* @nakamura196/react-ui 公式 UTokyo トークン (tokens.css 準拠) */
+        --ds-blue-50: #e7f3fd;
+        --ds-blue-600: #0b8bee;
+        --ds-blue-700: #096fbe;
+        --ds-blue-800: #07538f;
+        --ds-blue-900: #04385f;
+        --ds-blue-950: #021c30;
+        --ds-yellow: #ffcd00;
+
+        --bg: #f7f9fb;
         --surface: #ffffff;
-        --surface-sub: #f8fafc;
+        --surface-sub: #eef2f7;
         --border: #dce3ea;
         --border-strong: #c5d0dc;
-        --fg: #1a1d21;
-        --fg-muted: #526071;
-        --header-bg: #003d73;
-        --band-bg: #002b52;
-        --primary: #005096;
-        --primary-hover: #003d73;
-        --accent-yellow: #ffcd00;
-        --utokyo-bright: #0b8bee;
+        --fg: #1a1a1a;
+        --fg-muted: #51607a;
+        --header-bg: var(--ds-blue-800);
+        --band-bg: var(--ds-blue-900);
+        --primary: var(--ds-blue-600);
+        --primary-hover: var(--ds-blue-700);
+        --link: var(--ds-blue-700);
+        --accent-yellow: var(--ds-yellow);
         --ok: #047857;
         --warn: #b45309;
         --danger: #b91c1c;
         --purple: #6d28d9;
-        --focus-ring: #ffcd00;
+        --focus-ring: var(--ds-yellow);
         --radius: 6px;
-        --font-sans: "BIZ UDPGothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        --font-sans: "BIZ UDPGothic", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
         --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       }
 
       html.dark {
-        --bg: #020617;
-        --surface: #0f172a;
-        --surface-sub: #162033;
-        --border: #1e293b;
-        --border-strong: #334155;
-        --fg: #f1f5f9;
-        --fg-muted: #94a3b8;
-        --header-bg: #00284d;
-        --band-bg: #001d38;
-        --primary: #38bdf8;
-        --primary-hover: #7dd3fc;
+        --bg: #010e18;
+        --surface: #021c30;
+        --surface-sub: #032a47;
+        --border: #04385f;
+        --border-strong: #07538f;
+        --fg: #e7f3fd;
+        --fg-muted: #9dd1f8;
+        --header-bg: #021c30;
+        --band-bg: #011322;
+        --primary: #3ca2f1;
+        --primary-hover: #6db9f5;
+        --link: #6db9f5;
         --ok: #34d399;
         --warn: #fbbf24;
         --danger: #f87171;
         --purple: #c4b5fd;
-        --focus-ring: #ffcd00;
+        --focus-ring: #ffd733;
       }
 
       * {
@@ -79,7 +89,7 @@
       }
 
       a {
-        color: var(--primary);
+        color: var(--link);
         text-decoration: none;
       }
       a:hover {
@@ -486,7 +496,7 @@
       .bib-title {
         font-size: 15px;
         font-weight: 700;
-        color: var(--primary);
+        color: var(--link);
       }
       .bib-meta {
         font-size: 12px;
@@ -631,16 +641,19 @@
         <div class="toc__group">基礎 (Foundation)</div>
         <a href="#foundation">カラー・トークン</a>
         <a href="#typography">書体・余白・幅</a>
+        <a href="#ia-principles">情報設計（詰め込み禁止）</a>
         <a href="#accessibility">アクセシビリティ基準</a>
 
         <div class="toc__group">パーツ (Components)</div>
         <a href="#comp-header">ヘッダー・タイトル帯</a>
+        <a href="#comp-breadcrumb">パンくず・ページ送り</a>
         <a href="#comp-buttons">ボタン・状態表示</a>
         <a href="#comp-notice">通知バナー</a>
         <a href="#comp-kv">メタデータ一覧表</a>
 
         <div class="toc__group">画面パターン (Patterns)</div>
         <a href="#pat-search">検索・データカタログ</a>
+        <a href="#pat-admin">管理画面（左サイドバー）</a>
         <a href="#pat-news">お知らせ一覧</a>
       </aside>
 
@@ -653,55 +666,55 @@
             <span class="doc-section__tag">Foundation / Color</span>
           </div>
           <p class="doc-lead">
-            画面の 9 割は白と淡い背景（<code>#f4f6f8</code>）で構成し、濃い UTokyo ブルーはヘッダー・タイトル帯・主ボタン・リンクに限定して使います。本文文字と背景は WCAG 2.1 AA（コントラスト比 4.5:1 以上）を満たします。
+            <strong>東京大学 Visual Identity Guidelines (2024-06)</strong> に準拠した <code>tokens.css</code> の公式トーンスケール（UTokyo Blue <code>#0b8bee</code>〜<code>#021c30</code> ＋ UTokyo Yellow <code>#ffcd00</code>）をすべてのアプリで共通利用します。白背景上のテキストリンクにはコントラスト比 4.5:1 以上を満たす <code>--ds-blue-700 (#096fbe)</code> を使います。
           </p>
           <div class="swatch-grid">
             <div class="swatch">
-              <div class="swatch__color" style="background:#003d73"></div>
+              <div class="swatch__color" style="background:#0b8bee"></div>
               <div class="swatch__meta">
-                <div class="swatch__name">Header Blue</div>
-                <div class="swatch__code">#003d73</div>
-                <div class="swatch__use">グローバルヘッダー背景（白文字）</div>
+                <div class="swatch__name">UTokyo Blue (--ds-blue-600)</div>
+                <div class="swatch__code">#0b8bee</div>
+                <div class="swatch__use">主ボタン・ブランドアクセント（kasane 等）</div>
               </div>
             </div>
             <div class="swatch">
-              <div class="swatch__color" style="background:#002b52"></div>
+              <div class="swatch__color" style="background:#096fbe"></div>
               <div class="swatch__meta">
-                <div class="swatch__name">Title Band Blue</div>
-                <div class="swatch__code">#002b52</div>
-                <div class="swatch__use">検索・トップ上部のタイトル帯</div>
+                <div class="swatch__name">Link / Hover (--ds-blue-700)</div>
+                <div class="swatch__code">#096fbe</div>
+                <div class="swatch__use">白地の上のリンク文字・主ボタンホバー</div>
               </div>
             </div>
             <div class="swatch">
-              <div class="swatch__color" style="background:#005096"></div>
+              <div class="swatch__color" style="background:#07538f"></div>
               <div class="swatch__meta">
-                <div class="swatch__name">Primary Action / Link</div>
-                <div class="swatch__code">#005096</div>
-                <div class="swatch__use">主ボタン・一覧タイトルリンク</div>
+                <div class="swatch__name">Header Blue (--ds-blue-800)</div>
+                <div class="swatch__code">#07538f</div>
+                <div class="swatch__use">検索ポータル型グローバルヘッダー（白文字）</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background:#04385f"></div>
+              <div class="swatch__meta">
+                <div class="swatch__name">Title Band (--ds-blue-900)</div>
+                <div class="swatch__code">#04385f</div>
+                <div class="swatch__use">検索・トップ上部のタイトル帯（白文字）</div>
               </div>
             </div>
             <div class="swatch">
               <div class="swatch__color" style="background:#ffcd00"></div>
               <div class="swatch__meta">
-                <div class="swatch__name">UTokyo Yellow (Focus)</div>
+                <div class="swatch__name">UTokyo Yellow (--ds-yellow)</div>
                 <div class="swatch__code">#ffcd00</div>
                 <div class="swatch__use">キーボードフォーカス枠・最小限の差し色</div>
               </div>
             </div>
             <div class="swatch">
-              <div class="swatch__color" style="background:#f4f6f8"></div>
-              <div class="swatch__meta">
-                <div class="swatch__name">Page Background</div>
-                <div class="swatch__code">#f4f6f8</div>
-                <div class="swatch__use">ページ全体の落ち着いた背景色</div>
-              </div>
-            </div>
-            <div class="swatch">
-              <div class="swatch__color" style="background:#ffffff"></div>
+              <div class="swatch__color" style="background:#f7f9fb"></div>
               <div class="swatch__meta">
                 <div class="swatch__name">Surface &amp; Border</div>
-                <div class="swatch__code">#ffffff / #dce3ea</div>
-                <div class="swatch__use">一覧枠・入力欄の面と 1px 罫線</div>
+                <div class="swatch__code">#f7f9fb / #ffffff / #dce3ea</div>
+                <div class="swatch__use">ページ背景・白面・1px 罫線</div>
               </div>
             </div>
           </div>
@@ -728,6 +741,36 @@
                 <li>グラデーション背景・ドット柄・光るぼかし円（<code>blur-3xl</code>）</li>
                 <li>過度な角丸（<code>rounded-2xl</code>）や大きなドロップシャドウ</li>
                 <li>大文字英語の飾り見出し（例: <code>01 / FEATURE</code>）</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2b. FOUNDATION: IA PRINCIPLES (One thing per page) -->
+        <section class="doc-section" id="ia-principles">
+          <div class="doc-section__head">
+            <h2>情報設計の原則（1 画面 1 目的・詰め込み禁止）</h2>
+            <span class="doc-section__tag">Foundation / IA</span>
+          </div>
+          <p class="doc-lead">
+            AI に機能追加を頼み続けると、1 ページにカード・ボタン・説明が凝縮して「何をする画面か分からない」状態になりやすい。GOV.UK の <em>One thing per page</em> に倣い、役割ごとに URL パスを分割します。
+          </p>
+          <div class="guidance-grid">
+            <div class="guidance-box">
+              <h3>推奨（Do）</h3>
+              <ul>
+                <li>役割ごとに URL パスを分ける（例: <code>/account</code>・<code>/provider</code>・<code>/admin/providers</code>）</li>
+                <li>主ボタン（青塗り）は 1 セクションに 1 つだけにする</li>
+                <li>管理者専用・開発者用リンクは一般画面に混ぜない</li>
+                <li>説明文は 1〜2 文に収め、見出しと項目名で伝える</li>
+              </ul>
+            </div>
+            <div class="guidance-box guidance-box--dont">
+              <h3>避ける（Don't）</h3>
+              <ul>
+                <li>1 ページの中に「設定・申請・一覧・管理・API 例」を全部縦積みする</li>
+                <li>同じ URL のままタブ切り替えだけで無関係な機能を隠す</li>
+                <li>未ログイン状態でもダミー金額や他ユーザーの履歴を表示する</li>
               </ul>
             </div>
           </div>
@@ -778,9 +821,9 @@
             </div>
           </div>
           <div class="preview-box">
-            <div class="preview-box__bar"><span>プレビュー</span><span>高さ 64px / 単色 #003d73 + #002b52</span></div>
+            <div class="preview-box__bar"><span>プレビュー A（検索ポータル型：dataspace.ldas.jp）</span><span>--ds-blue-800 (#07538f) + --ds-blue-900 (#04385f)</span></div>
             <div>
-              <div style="background:#003d73;color:#fff;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;">
+              <div style="background:#07538f;color:#fff;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;">
                 <strong style="font-size:16px;">LDAS DataSpace</strong>
                 <div style="display:flex;gap:16px;font-size:13px;opacity:.92;">
                   <span>ホーム</span>
@@ -789,10 +832,51 @@
                   <span>マイページ</span>
                 </div>
               </div>
-              <div style="background:#002b52;color:#fff;padding:22px 16px;text-align:center;">
+              <div style="background:#04385f;color:#fff;padding:22px 16px;text-align:center;">
                 <div style="font-size:20px;font-weight:700;">LDAS DataSpace データカタログ</div>
-                <div style="font-size:12px;opacity:.8;margin-top:4px;">文化資源・メディア横断データスペース</div>
+                <div style="font-size:12px;opacity:.82;margin-top:4px;">文化資源・メディア横断データスペース</div>
               </div>
+            </div>
+          </div>
+
+          <div class="preview-box">
+            <div class="preview-box__bar"><span>プレビュー B（ビューア・ツール型：kasane.ldas.jp）</span><span>白地ヘッダー ＋ --ds-blue-600 (#0b8bee)</span></div>
+            <div style="background:#ffffff;color:#1a1a1a;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e2e8f0;">
+              <strong style="font-size:16px;color:#0b8bee;">IIIF Kasane</strong>
+              <div style="display:flex;gap:16px;font-size:13px;color:#51607a;">
+                <span>ビューア</span>
+                <span>ユースケース</span>
+                <span>日本語 ▾</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4b. COMPONENT: BREADCRUMB & PAGINATION -->
+        <section class="doc-section" id="comp-breadcrumb">
+          <div class="doc-section__head">
+            <h2>パンくずリスト・ページ送り</h2>
+            <span class="doc-section__tag">Component / Navigation</span>
+          </div>
+          <div class="preview-box">
+            <div class="preview-box__bar"><span>プレビュー</span><span>階層表示（Breadcrumb）＋ ページ送り（Pagination）</span></div>
+            <div class="preview-box__body" style="display:grid;gap:18px;">
+              <nav aria-label="パンくずリスト" style="font-size:12px;color:var(--fg-muted);">
+                <a href="#comp-breadcrumb">ホーム</a>
+                <span style="margin:0 8px;">/</span>
+                <a href="#comp-breadcrumb">データカタログ</a>
+                <span style="margin:0 8px;">/</span>
+                <strong style="color:var(--fg);">谷中・根津・千駄木 1〜10号</strong>
+              </nav>
+              <nav aria-label="ページ送り" style="display:flex;align-items:center;gap:6px;font-size:12px;">
+                <button type="button" class="btn btn--secondary" style="padding:5px 10px;">← 前へ</button>
+                <button type="button" class="btn btn--primary" style="padding:5px 11px;">1</button>
+                <button type="button" class="btn btn--secondary" style="padding:5px 11px;">2</button>
+                <button type="button" class="btn btn--secondary" style="padding:5px 11px;">3</button>
+                <span style="color:var(--fg-muted);padding:0 4px;">…</span>
+                <button type="button" class="btn btn--secondary" style="padding:5px 11px;">20</button>
+                <button type="button" class="btn btn--secondary" style="padding:5px 10px;">次へ →</button>
+              </nav>
             </div>
           </div>
         </section>
@@ -969,6 +1053,45 @@
   &lt;article class="flex justify-between gap-4 px-5 py-4 hover:bg-[#f8fafc]"&gt;...&lt;/article&gt;
 &lt;/div&gt;</pre>
           </details>
+        </section>
+
+        <!-- 8b. PATTERN: ADMIN WORKSPACE -->
+        <section class="doc-section" id="pat-admin">
+          <div class="doc-section__head">
+            <h2>管理画面パターン（左サイドバー＋機能別 URL）</h2>
+            <span class="doc-section__tag">Pattern / Admin</span>
+          </div>
+          <p class="doc-lead">
+            <code>dataspace.ldas.jp/admin/*</code> や <code>archivebase</code> のような管理画面では、左側に固定幅メニュー（各項目が独立した URL パス）、右側に 1 目的のワークスペースを配置します。
+          </p>
+          <div class="preview-box">
+            <div class="preview-box__bar"><span>プレビュー</span><span>左 200px 固定メニュー ＋ 右 1 機能ワークスペース</span></div>
+            <div class="preview-box__body preview-box__body--canvas">
+              <div style="display:grid;grid-template-columns:190px minmax(0,1fr);gap:16px;align-items:start;">
+                <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px;font-size:12px;">
+                  <div style="font-weight:700;color:var(--fg-muted);padding:4px 8px 8px;border-bottom:1px solid var(--border);margin-bottom:6px;">管理メニュー</div>
+                  <div style="padding:6px 8px;border-radius:4px;color:var(--fg-muted);">カタログ収集 (/admin)</div>
+                  <div style="padding:6px 8px;border-radius:4px;background:var(--ds-blue-50);color:var(--ds-blue-800);font-weight:700;">提供者承認 (/admin/providers)</div>
+                  <div style="padding:6px 8px;border-radius:4px;color:var(--fg-muted);">利用実績審査 (/admin/use-cases)</div>
+                  <div style="padding:6px 8px;border-radius:4px;color:var(--fg-muted);">お問い合わせ (/admin/inquiries)</div>
+                </div>
+                <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+                  <div style="font-size:14px;font-weight:700;margin-bottom:4px;">データ提供者 DSP 窓口の承認</div>
+                  <div style="font-size:12px;color:var(--fg-muted);margin-bottom:12px;">承認待ちの申請を確認し、公開・停止・削除を行います。</div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--border);padding-top:12px;font-size:12px;">
+                    <div>
+                      <strong>谷根千デジタルアーカイブ</strong>
+                      <div style="font-family:var(--font-mono);color:var(--fg-muted);font-size:11px;">https://yanesen.ldas.jp · nakamura@hi.u-tokyo.ac.jp</div>
+                    </div>
+                    <div style="display:flex;gap:6px;">
+                      <button type="button" class="btn btn--primary" style="padding:5px 10px;font-size:12px;">承認して公開</button>
+                      <button type="button" class="btn btn--secondary" style="padding:5px 10px;font-size:12px;">停止</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- 9. PATTERN: NEWS LIST -->

@@ -16,7 +16,7 @@
 - **文章による指針**: [docs/design-guidelines.md](docs/design-guidelines.md)
 - **参考**: [デジタル庁デザインシステム](https://design.digital.go.jp/) / [GOV.UK Design System](https://design-system.service.gov.uk/) / [東洋文庫 漢籍データベース](https://kanseki.toyobunko-lab.jp/search?size=n_20_n)（UTokyo ブルー版実装例: `https://dataspace.ldas.jp/catalog/`）
 - **基本原則**:
-  - 濃い UTokyo ブルー単色ヘッダー（`#003d73`）＋単色タイトル帯（`#002b52`）＋最大幅 `1280px`（`max-w-7xl`）
+  - 色は `tokens.css` の公式 UTokyo トーンスケール（`#0b8bee` / `#096fbe` / `#07538f` / `#04385f` ＋ `#ffcd00`）に統一し、最大幅 `1280px`（`max-w-7xl`）を基本とする
   - 検索・一覧は左サイドバーや分厚い 2 列カード乱立を避け、「中央検索バー → 横一列ドロップダウン絞り込み → 件数・並び順バー → 1 つの白枠＋罫線（`divide-y`）の書誌リスト」で構成する
   - グラデーション背景・blur 光球・ガラスモーフィズム・過度な角丸・飾り英語キャプション等「AI が既定で作りがちな SaaS 意匠」は使わない
 
